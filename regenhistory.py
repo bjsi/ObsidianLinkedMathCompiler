@@ -19,7 +19,7 @@ class RegenHistory:
 
     def read(self):
         try:
-            with open(self.fs.regen_history_file()) as f:
+            with open(self.fs.get_history_file()) as f:
                 return json.loads(f.read())
         except Exception:
             pass
@@ -28,14 +28,14 @@ class RegenHistory:
 
     def write(self):
         try:
-            with open(self.fs.regen_history_file(), 'w') as f:
+            with open(self.fs.get_history_file(), 'w') as f:
                 f.write(json.dumps(self.data))
         except Exception as e:
             print(f"Failed to get regeneration history with exception {e}")
 
     @staticmethod
     def get_modified_time(file):
-        return os.path.getmtime(file)
+        return int(os.path.getmtime(file))
 
     def get_blockref_files(self, md: str):
         files = []
@@ -57,7 +57,6 @@ class RegenHistory:
         md = file.read_text()
         block_ref_files = self.get_blockref_files(md)
         for ref_file in block_ref_files:
-            # Remember to compare this file's compilation time to the ref files' modified times.
             ref_last_modified = self.get_modified_time(ref_file)
             if ref_last_modified > last_regen:
                 return True

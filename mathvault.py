@@ -34,12 +34,13 @@ class MathVault:
 
         history = RegenHistory(self.fs)
         files = self.get_math_files(history)
+        if files is None or len(files) == 0:
+            print("No files to regenerate.")
+            return
 
         for file in files:
             file.regenerate_cards()
             history.data[str(file.path)] = int(time.time())
 
         history.write()
-
-
-
+        print("Regenerated cards.")

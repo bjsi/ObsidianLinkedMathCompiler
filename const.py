@@ -5,6 +5,8 @@ BLOCK_REF_REGEX = r"\!\[.*?\]\(([=a-zA-Z0-9\_\/\?\&\%\+\#\.\-]+)\#\^([=a-zA-Z0-9
 MATHJAX_REGEX = r'(?<!\\)(\$\$?)(.+?)\1'
 QUESTION_HTML_FN = "question.html"
 ANSWER_HTML_FN = "answer.html"
-CLOZE_TAG_REGEX = "^c$|^c(\d+)$"
+CLOZE_TAG_REGEX = r"^c$|^c(\d+)$"
 BLOCK_REF_HASH_REGEX = r"(.+)( \^[=a-zA-Z0-9]+)"
-
+INCLUDED_BLOCKS_FOLDER = "blocks"
+IMAGES_FOLDER = "images"
+DELETED_DATA_FN = "deleted.json"
