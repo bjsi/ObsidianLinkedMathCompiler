@@ -74,7 +74,7 @@ class Cloze:
         try:
             with open(sm_component) as f:
                 text = f.read()
-                soup = bs4.BeautifulSoup(text)
+                soup = bs4.BeautifulSoup(text, features="html.parser")
                 found = soup.find("div", attrs={"obsidian-math": "true"})
                 if found is None:
                     return True
@@ -124,7 +124,7 @@ class Cloze:
         self.create_folder()
         try:
             with open(self.answer_path, "w") as fobj:
-                fobj.write("<div obsidian-math='true'>" + self.answer_content + "</div>")
+                fobj.write("<div obsidian-math='true'>Obsidian Math</div>" + self.answer_content)
         except Exception as e:
             print(f"Failed to save answer to {self.answer_path} with exception {e}")
 
@@ -132,7 +132,7 @@ class Cloze:
         self.create_folder()
         try:
             with open(self.question_path, "w") as fobj:
-                fobj.write("<div obsidian-math='true'>" + self.question_content + "</div>")
+                fobj.write("<div obsidian-math='true'>Obsidian Math</div>" + self.question_content)
         except Exception as e:
             print(f"Failed to save question to {self.question_path} with exception {e}")
 

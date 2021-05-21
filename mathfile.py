@@ -124,13 +124,13 @@ class MathFile:
 
     @staticmethod
     def has_clozes(md: str):
-        soup = BeautifulSoup(md)
+        soup = BeautifulSoup(md, features="html.parser")
         c_tags = soup.findAll(lambda x: re.search(CLOZE_TAG_REGEX, x.name))
         return c_tags is not None and len(c_tags) > 0
 
     # TODO: add cleared folders to the deleted list
     def clear_unused_cloze_folders(self, md: str):
-        soup = BeautifulSoup(md)
+        soup = BeautifulSoup(md, features="html.parser")
         c_tags = soup.findAll(lambda x: re.search(CLOZE_TAG_REGEX, x.name))
 
         used = defaultdict(list)  # filepath: [cloze number, cloze number ...]

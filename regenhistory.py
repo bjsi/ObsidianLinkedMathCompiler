@@ -46,18 +46,20 @@ class RegenHistory:
         return files
 
     def should_regen(self, file: Path):
-        last_regen = self.data.get(str(file))  # timestamp or None
+        last_regen = self.data.get("global_last_regen", -1)
         last_modified = self.get_modified_time(file)
 
-        # Simple case - file last modified > last regeneration time
-        if not last_regen or last_modified > last_regen:
+        # Simple case - this file was modified since the last regen.
+        if last_modified > last_regen:
             return True
 
-        # Complex case - some file included as a block ref changed.
+        # Complex case - some file included as a block ref was modified since last regen.
         md = file.read_text()
         block_ref_files = self.get_blockref_files(md)
         for ref_file in block_ref_files:
             ref_last_modified = self.get_modified_time(ref_file)
+
+            # block refs file's last modified time > last regen time
             if ref_last_modified > last_regen:
                 return True
 
